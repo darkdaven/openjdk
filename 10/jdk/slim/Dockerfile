@@ -16,11 +16,12 @@ FROM debian:sid-slim
 #     For some sample build times, see Debian's buildd logs:
 #       https://buildd.debian.org/status/logs.php?pkg=openjdk-10
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends \
 		bzip2 \
 		unzip \
-		xz-utils \
-	&& rm -rf /var/lib/apt/lists/*
+		xz-utils
+RUN rm -rf /var/lib/apt/lists/*
 
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
@@ -69,11 +70,6 @@ RUN set -ex; \
 # ... and verify that it actually worked for one of the alternatives we care about
 	update-alternatives --query java | grep -q 'Status: manual'
 
-# https://docs.oracle.com/javase/10/tools/jshell.htm
-# https://en.wikipedia.org/wiki/JShell
-CMD ["jshell"]
-
 # If you're reading this and have any feedback on how this image could be
 # improved, please open an issue or a pull request so we can discuss it!
-#
 #   https://github.com/docker-library/openjdk/issues
